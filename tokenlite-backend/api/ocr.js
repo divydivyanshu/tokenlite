@@ -55,75 +55,107 @@ module.exports = async function (req, res) {
       });
     }
 
-    const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${process.env.GROQ_API_KEY}`
-      },
-      body: JSON.stringify({
-        model: 'llama-3.2-11b-vision-preview', // Vision model that supports images
-        messages: [{
-          role: 'user',
-          content: [
-            {
-              type: 'image_url',
-              image_url: {
-                url: `data:${mime_type};base64,${image_base64}`
-              }
-            },
-            {
-              type: 'text',
-              text: 'Extract all text from this image. Return clean markdown only. Preserve tables, headings, bullet lists. No explanation or preamble.'
-            }
-          ]
-        }]
-      })
-    });
+    // Try multiple vision models in order
+    const visionModels = [
+      'llama-3.2-90b-vision-preview',
+      'llama-3.2-11b-vision-preview',
+      'llama-3.1-8b-instant', // Fallback text model
+    ];
+    
+    let lastError = null;
+    
+    for (const model of visionModels) {
+      try {
+        console.log(`Trying model: ${model}`);
+        const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${process.env.GROQ_API_KEY}`
+          },
+          body: JSON.stringify({
+            model: model,
+            messages: [{
+              role: 'user',
+              content: [
+                {
+                  type: 'image_url',
+                  image_url: {
+                    url: `data:${mime_type};base64,${image_base64}`
+                  }
+                },
+                {
+                  type: 'text',
+                  text: 'Extract all text from this image. Return clean markdown only. Preserve tables, headings, bullet lists. No explanation or preamble.'
+                }
+              ]
+            }],
+            max_tokens: 2000
+          })
+        });
 
-    if (!groqRes.ok) {
-      const errText = await groqRes.text();
-      console.error('Groq API Error:', errText);
-      
-      // More specific error handling
-      if (errText.includes('model does not support image input')) {
-        return res.status(400).json({ 
-          error: 'OCR_FAILED', 
-          message: 'Vision model not available. Please try another image or contact support.' 
+        if (!groqRes.ok) {
+          const errText = await groqRes.text();
+          console.error(`Model ${model} failed:`, errText);
+          lastError = errText;
+          
+          // If model doesn't support images, try next one
+          if (errText.includes('model does not support image input')) {
+            continue;
+          }
+          
+          // Other errors break the loop
+          break;
+        }
+
+        const data = await groqRes.json();
+        const markdown = data.choices?.[0]?.message?.content || '';
+        
+        // Update usage in database
+        await turso.execute({
+          sql: `INSERT INTO usage (uuid, screenshot_count)
+                VALUES (?, 1)
+                ON CONFLICT(uuid)
+                DO UPDATE SET screenshot_count = screenshot_count + 1`,
+          args: [uuid]
         });
-      }
-      
-      if (errText.includes('quota') || errText.includes('rate limit')) {
-        return res.status(429).json({ 
-          error: 'GEMINI_QUOTA_EXCEEDED', 
-          message: 'API quota exceeded. Please try again later.' 
+
+        const newCount = currentCount + 1;
+        const remaining = Math.max(0, 5 - newCount);
+
+        return res.status(200).json({
+          markdown,
+          screenshots_used: newCount,
+          screenshots_remaining: remaining
         });
+        
+      } catch (modelError) {
+        console.error(`Error with model ${model}:`, modelError);
+        lastError = modelError.message;
+        continue;
       }
-      
-      return res.status(502).json({ 
-        error: 'OCR_FAILED', 
-        message: 'Image processing failed. Please try again.' 
-      });
     }
 
-    const data = await groqRes.json();
-    const markdown = data.choices?.[0]?.message?.content || '';
-
-    await turso.execute({
-      sql: `INSERT INTO usage (uuid, screenshot_count)
-            VALUES (?, 1)
-            ON CONFLICT(uuid)
-            DO UPDATE SET screenshot_count = screenshot_count + 1`,
-      args: [uuid]
-    });
-
-    const newCount = currentCount + 1;
-    const remaining = Math.max(0, 5 - newCount);
-
-    return res.status(200).json({
-      markdown,
-      screenshots_used: newCount,
-      screenshots_remaining: remaining
+    // If we get here, all models failed
+    console.error('All vision models failed. Last error:', lastError);
+    
+    if (lastError && lastError.includes('model does not support image input')) {
+      return res.status(400).json({ 
+        error: 'OCR_FAILED', 
+        message: 'No vision model available. Please try another image or contact support.' 
+      });
+    }
+    
+    if (lastError && (lastError.includes('quota') || lastError.includes('rate limit'))) {
+      return res.status(429).json({ 
+        error: 'GEMINI_QUOTA_EXCEEDED', 
+        message: 'API quota exceeded. Please try again later.' 
+      });
+    }
+    
+    return res.status(502).json({ 
+      error: 'OCR_FAILED', 
+      message: 'Image processing failed. Please try again.' 
     });
   } catch (error) {
     console.error('Server error:', error);
