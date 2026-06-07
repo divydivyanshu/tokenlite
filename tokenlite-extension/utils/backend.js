@@ -1,6 +1,6 @@
 import { getOrCreateUUID } from './uuid.js';
 
-const BACKEND_URL = 'http://localhost:3000';
+const BACKEND_URL = 'https://tokenlite-backend.vercel.app';
 
 async function convertScreenshot(imageBase64, mimeType) {
   try {
@@ -39,6 +39,7 @@ async function convertScreenshot(imageBase64, mimeType) {
       return { error: data.error || 'OCR_FAILED' };
     }
   } catch (error) {
+    console.error('TokenLite backend screenshot request failed:', error);
     return { error: 'OFFLINE' };
   }
 }
@@ -62,6 +63,7 @@ async function getScreenshotCount() {
     
     return 0;
   } catch (error) {
+    console.error('TokenLite backend usage request failed:', error);
     return 0;
   }
 }

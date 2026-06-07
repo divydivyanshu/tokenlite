@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
   const btnPaste = document.getElementById('btn-paste');
   const btnCopy = document.getElementById('btn-copy');
+  const btnDownload = document.getElementById('btn-download');
   const btnRetry = document.getElementById('btn-retry');
   
   // Screenshots Tab Elements
@@ -295,6 +296,21 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     } else {
       console.log('Clipboard API not available');
+    }
+  });
+
+  btnDownload.addEventListener('click', () => {
+    if (typeof chrome !== 'undefined' && chrome.runtime) {
+      chrome.runtime.sendMessage({
+        type: 'DOWNLOAD_MARKDOWN',
+        text: currentMarkdown
+      }, (response) => {
+        if (response && response.success) {
+          temporarilyChangeButtonText(btnDownload, 'Downloaded ✓', '↓ Download .md');
+        } else {
+          temporarilyChangeButtonText(btnDownload, 'Failed ❌', '↓ Download .md');
+        }
+      });
     }
   });
 

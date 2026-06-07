@@ -62,7 +62,7 @@ module.exports = async function (req, res) {
         'Authorization': `Bearer ${process.env.GROQ_API_KEY}`
       },
       body: JSON.stringify({
-        model: 'meta-llama/llama-4-scout-17b-16e-instruct',
+        model: 'llama-3.2-11b-vision-preview', // Vision model that supports images
         messages: [{
           role: 'user',
           content: [
@@ -84,7 +84,26 @@ module.exports = async function (req, res) {
     if (!groqRes.ok) {
       const errText = await groqRes.text();
       console.error('Groq API Error:', errText);
-      return res.status(502).json({ error: 'OCR_FAILED' });
+      
+      // More specific error handling
+      if (errText.includes('model does not support image input')) {
+        return res.status(400).json({ 
+          error: 'OCR_FAILED', 
+          message: 'Vision model not available. Please try another image or contact support.' 
+        });
+      }
+      
+      if (errText.includes('quota') || errText.includes('rate limit')) {
+        return res.status(429).json({ 
+          error: 'GEMINI_QUOTA_EXCEEDED', 
+          message: 'API quota exceeded. Please try again later.' 
+        });
+      }
+      
+      return res.status(502).json({ 
+        error: 'OCR_FAILED', 
+        message: 'Image processing failed. Please try again.' 
+      });
     }
 
     const data = await groqRes.json();

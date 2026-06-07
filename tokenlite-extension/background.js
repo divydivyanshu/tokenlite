@@ -100,6 +100,26 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return true;
   }
 
+  if (message.type === 'DOWNLOAD_MARKDOWN') {
+    const now = new Date();
+    const timestamp = `${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}_${now.getHours().toString().padStart(2, '0')}${now.getMinutes().toString().padStart(2, '0')}`;
+    const filename = `tokenlite_${timestamp}.md`;
+
+    chrome.downloads.download({
+      url: `data:text/markdown;charset=utf-8,${encodeURIComponent(message.text)}`,
+      filename: filename,
+      saveAs: false
+    }, (downloadId) => {
+      if (chrome.runtime.lastError) {
+        sendResponse({ success: false, error: chrome.runtime.lastError.message });
+      } else {
+        sendResponse({ success: true, filename: filename });
+      }
+    });
+
+    return true;
+  }
+
   if (message.type === 'GET_UUID') {
     getOrCreateUUID().then(sendResponse);
     return true;

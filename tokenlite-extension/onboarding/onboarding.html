@@ -3,70 +3,221 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome to TokenLite</title>
+  <title>TokenLite – Welcome</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Geist+Mono:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="onboarding.css">
 </head>
 <body>
-  <div class="ambient-glow" aria-hidden="true"></div>
-  <div class="slider-container">
-    <!-- Slide 1 -->
-    <div class="slide active" id="slide-1">
-      <div class="slide-content slide-panel">
-        <div class="eyebrow">Token efficiency</div>
-        <div class="visual-stack">
-          <div class="compare-card compare-card-high">
-            <div class="compare-label">Screenshot</div>
-            <div class="compare-value">1275 Tokens</div>
-          </div>
-          <div class="flow-arrow">↓</div>
-          <div class="compare-card compare-card-low">
-            <div class="compare-label">Markdown</div>
-            <div class="compare-value">85 Tokens</div>
-          </div>
-        </div>
-        <h1>Stop Wasting Tokens</h1>
-        <p class="subtitle">Convert heavy screenshots and documents into compact markdown before they reach the model.</p>
-        <div class="hero-stat">Save up to 93%</div>
-        <button class="cta-btn next-btn">Continue</button>
-      </div>
-    </div>
-
-    <!-- Slide 2 -->
-    <div class="slide" id="slide-2">
-      <div class="slide-content slide-panel">
-        <div class="eyebrow">Automatic workflow</div>
-        <div class="flow-visual">
-          <div class="flow-card">Screenshot</div>
-          <div class="flow-arrow">↓</div>
-          <div class="flow-card flow-card-brand">TokenLite</div>
-          <div class="flow-arrow">↓</div>
-          <div class="flow-card">Markdown</div>
-        </div>
-        <h2>Works Automatically</h2>
-        <p class="subtitle flow-copy">Take a screenshot.<br>Paste normally.<br>TokenLite does the rest.</p>
-        <button class="cta-btn next-btn">Continue</button>
-      </div>
-    </div>
-
-    <!-- Slide 3 -->
-    <div class="slide" id="slide-3">
-      <div class="slide-content slide-panel ready-panel">
-        <div class="large-icon">⚡</div>
-        <h1>You're Ready</h1>
-        <p class="subtitle">5 Free Screenshot Conversions Included</p>
-        <p class="secondary-note">PDF &amp; DOC Conversion Is Unlimited</p>
-        <button class="cta-btn" id="finish-btn">Open ChatGPT</button>
+  <div class="scanline" aria-hidden="true"></div>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="terminal-border top" aria-hidden="true"></div>
+  <div class="terminal-border right" aria-hidden="true"></div>
+  <div class="terminal-border bottom" aria-hidden="true"></div>
+  <div class="terminal-border left" aria-hidden="true"></div>
+  
+  <div class="onboarding-header">
+    <div class="logo-container">
+      <img src="../icons/icon128.png" alt="TokenLite" class="logo-img">
+      <div class="logo-text">
+        <span class="logo-wordmark">TokenLite</span>
+        <span class="logo-tagline">Paste smarter. Use less tokens.</span>
       </div>
     </div>
   </div>
+  
+  <div class="slider-container">
+    <!-- Slide 1: Token Efficiency -->
+    <div class="slide active" id="slide-1">
+      <div class="slide-header">
+        <div class="slide-number">01</div>
+        <div class="slide-eyebrow">EFFICIENCY</div>
+      </div>
+      
+      <div class="visual-stack">
+        <div class="comparison">
+          <div class="badge bad">
+            <div class="badge-label">SCREENSHOT</div>
+            <div class="badge-value" data-glitch="1275">1275</div>
+            <div class="badge-unit">TOKENS</div>
+          </div>
+          
+          <div class="conversion-arrow">
+            <svg width="60" height="24" viewBox="0 0 60 24" fill="none">
+              <path d="M0 12 L60 12 M48 6 L60 12 L48 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          
+          <div class="badge good">
+            <div class="badge-label">MARKDOWN</div>
+            <div class="badge-value">85</div>
+            <div class="badge-unit">TOKENS</div>
+          </div>
+        </div>
+      </div>
+      
+      <h1 class="title" data-text="STOP WASTING">STOP WASTING</h1>
+      <h2 class="subtitle">Convert heavy screenshots into compact markdown before they reach the model.</h2>
+      
+      <div class="savings-display">
+        <div class="savings-badge">
+          <span class="savings-value">93%</span>
+          <span class="savings-label">TOKEN SAVINGS</span>
+        </div>
+      </div>
+      
+      <button class="cta-btn next-btn glitch-trigger">
+        <span class="btn-text">CONTINUE</span>
+        <svg class="btn-icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
 
-  <div class="progress-dots">
-    <div class="dot active"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
+    <!-- Slide 2: Automatic Workflow -->
+    <div class="slide" id="slide-2">
+      <div class="slide-header">
+        <div class="slide-number">02</div>
+        <div class="slide-eyebrow">AUTOMATION</div>
+      </div>
+      
+      <div class="workflow-diagram">
+        <div class="workflow-step">
+          <div class="step-icon">📸</div>
+          <div class="step-label">SCREENSHOT</div>
+        </div>
+        
+        <div class="workflow-connector">
+          <div class="connector-line"></div>
+          <div class="connector-arrow">↓</div>
+        </div>
+        
+        <div class="workflow-step accent">
+          <div class="step-icon">⚡</div>
+          <div class="step-label">TOKENLITE</div>
+        </div>
+        
+        <div class="workflow-connector">
+          <div class="connector-line"></div>
+          <div class="connector-arrow">↓</div>
+        </div>
+        
+        <div class="workflow-step">
+          <div class="step-icon">📝</div>
+          <div class="step-label">MARKDOWN</div>
+        </div>
+      </div>
+      
+      <h1 class="title">AUTOMATIC WORKFLOW</h1>
+      <h2 class="subtitle">Take screenshot → Press Ctrl+V → TokenLite converts → Markdown appears.</h2>
+      
+      <div class="instruction-grid">
+        <div class="instruction">
+          <div class="instruction-index">01</div>
+          <div class="instruction-text">CAPTURE ANY CONTENT</div>
+        </div>
+        <div class="instruction">
+          <div class="instruction-index">02</div>
+          <div class="instruction-text">PASTE AS USUAL</div>
+        </div>
+        <div class="instruction">
+          <div class="instruction-index">03</div>
+          <div class="instruction-text">AUTOMATIC CONVERSION</div>
+        </div>
+        <div class="instruction">
+          <div class="instruction-index">04</div>
+          <div class="instruction-text">READY FOR LLMs</div>
+        </div>
+      </div>
+      
+      <button class="cta-btn next-btn glitch-trigger">
+        <span class="btn-text">CONTINUE</span>
+        <svg class="btn-icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Slide 3: Ready -->
+    <div class="slide" id="slide-3">
+      <div class="slide-header">
+        <div class="slide-number">03</div>
+        <div class="slide-eyebrow">READY</div>
+      </div>
+      
+      <div class="terminal-card">
+        <div class="terminal-header">
+          <div class="terminal-dot red"></div>
+          <div class="terminal-dot yellow"></div>
+          <div class="terminal-dot green"></div>
+          <div class="terminal-title">TOKENLITE_READY</div>
+        </div>
+        
+        <div class="terminal-content">
+          <div class="terminal-line">
+            <span class="prompt">$</span> <span class="command">system_status</span>
+          </div>
+          <div class="terminal-output">
+            <div class="output-line">✓ BACKEND: ONLINE</div>
+            <div class="output-line">✓ OCR: READY</div>
+            <div class="output-line">✓ CONVERTER: ACTIVE</div>
+          </div>
+          
+          <div class="terminal-line">
+            <span class="prompt">$</span> <span class="command">usage_balance</span>
+          </div>
+          <div class="terminal-output">
+            <div class="output-line highlight">SCREENSHOTS: 5/5 FREE</div>
+            <div class="output-line">PDF/DOC: UNLIMITED</div>
+          </div>
+          
+          <div class="terminal-line">
+            <span class="prompt">$</span> <span class="command blink">start_session</span>
+          </div>
+        </div>
+      </div>
+      
+      <h1 class="title">SYSTEM READY</h1>
+      <h2 class="subtitle">TokenLite is active and ready for your first conversion.</h2>
+      
+      <div class="feature-grid">
+        <div class="feature">
+          <div class="feature-icon">⚡</div>
+          <div class="feature-label">FAST CONVERSION</div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">🔒</div>
+          <div class="feature-label">LOCAL PROCESSING</div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">📁</div>
+          <div class="feature-label">.MD DOWNLOAD</div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">🎯</div>
+          <div class="feature-label">MULTI-PLATFORM</div>
+        </div>
+      </div>
+      
+      <button class="cta-btn primary glitch-trigger" id="finish-btn">
+        <span class="btn-text">OPEN CHATGPT</span>
+        <svg class="btn-icon" width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <path d="M4 9L14 9M14 9L10 5M14 9L10 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="progress-indicator">
+    <div class="progress-bar">
+      <div class="progress-fill" style="width: 33.33%"></div>
+    </div>
+    <div class="progress-dots">
+      <div class="dot active"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
   </div>
 
   <script src="onboarding.js"></script>

@@ -411,7 +411,13 @@ main {
 
 .action-buttons {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
+}
+
+.action-buttons .btn {
+  flex: 1 1 calc(50% - 10px);
+  min-width: 120px;
 }
 
 .error-card {
