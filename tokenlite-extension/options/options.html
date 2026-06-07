@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TokenLite Options</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0A0A0A;
+      --surface: #121212;
+      --surface2: #181818;
+      --border: #262626;
+      --primary: #5B8CFF;
+      --primary-soft: rgba(91, 140, 255, 0.15);
+      --success: #22C55E;
+      --warning: #F59E0B;
+      --error: #EF4444;
+      --text: #FFFFFF;
+      --text-secondary: #A1A1AA;
+      --text-muted: #71717A;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at top, rgba(91, 140, 255, 0.1), transparent 34%),
+        var(--bg);
+      color: var(--text);
+      font-family: 'Space Mono', monospace;
+      padding: 48px 24px;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 780px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .hero {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 28px;
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01)),
+        var(--surface);
+      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.34);
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .brand-line {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .logo-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      background: rgba(91, 140, 255, 0.1);
+      border: 1px solid rgba(91, 140, 255, 0.24);
+    }
+
+    .tagline {
+      color: var(--text-secondary);
+      font-size: 13px;
+    }
+
+    .version-pill {
+      flex: none;
+      border-radius: 999px;
+      padding: 8px 12px;
+      border: 1px solid rgba(91, 140, 255, 0.3);
+      background: rgba(91, 140, 255, 0.08);
+      color: #d6e1ff;
+      font-size: 11px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 18px;
+    }
+
+    .card {
+      padding: 22px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.015), rgba(255, 255, 255, 0.008)),
+        var(--surface);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.24);
+    }
+
+    .card h2 {
+      font-size: 14px;
+      margin-bottom: 14px;
+    }
+
+    .card p,
+    .card li,
+    .card a,
+    .meta-value,
+    code {
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+    }
+
+    .meta-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .meta-item {
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .meta-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .meta-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    code {
+      display: inline-block;
+      word-break: break-all;
+      color: var(--text);
+      background: var(--surface2);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 10px;
+      padding: 8px 10px;
+    }
+
+    ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    li::before {
+      content: '— ';
+      color: var(--primary);
+    }
+
+    .link-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .link-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      background: var(--surface2);
+    }
+
+    .link-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    a {
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: #d6e1ff;
+    }
+
+    .footer {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 11px;
+      padding-top: 6px;
+    }
+
+    @media (max-width: 720px) {
+      body {
+        padding: 28px 16px;
+      }
+
+      .hero {
+        flex-direction: column;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <section class="hero">
+      <div class="brand">
+        <div class="brand-line">
+          <span class="logo-mark">⚡</span>
+          <span>TokenLite</span>
+        </div>
+        <div class="tagline">Paste smarter. Use less tokens.</div>
+      </div>
+      <div class="version-pill">Version 1.0.0</div>
+    </section>
+
+    <div class="grid">
+      <section class="card">
+        <h2>About TokenLite</h2>
+        <p>TokenLite converts screenshots, PDFs, and DOCX files into cleaner markdown so prompts stay compact, readable, and more efficient inside AI chat interfaces.</p>
+      </section>
+
+      <section class="card">
+        <h2>Version &amp; UUID</h2>
+        <div class="meta-list">
+          <div class="meta-item">
+            <div class="meta-label">Version</div>
+            <div class="meta-value">1.0.0</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">UUID</div>
+            <code id="uuid-display">Loading...</code>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>What TokenLite Does</h2>
+        <ul>
+          <li>Intercepts pasted screenshots on supported AI sites</li>
+          <li>Converts visual content into markdown before it reaches the model</li>
+          <li>Supports PDF and DOC conversion from the extension popup</li>
+          <li>Helps reduce prompt size and improve readability</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Privacy &amp; Contact</h2>
+        <div class="link-list">
+          <div class="link-item">
+            <span class="link-label">Privacy Policy</span>
+            <a href="#" aria-disabled="true">Coming soon</a>
+          </div>
+          <div class="link-item">
+            <span class="link-label">Contact</span>
+            <a href="#" aria-disabled="true">Coming soon</a>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="footer">TokenLite</div>
+  </div>
+  <script type="module" src="options.js"></script>
+</body>
+</html>

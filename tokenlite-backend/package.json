@@ -1,0 +1,10 @@
+{
+  "name": "tokenlite-backend",
+  "version": "1.0.0",
+  "description": "Vercel serverless API for TokenLite",
+  "main": "api/ocr.js",
+  "dependencies": {
+    "@libsql/client": "^0.14.0",
+    "dotenv": "^17.4.2"
+  }
+}

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to TokenLite</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="onboarding.css">
+</head>
+<body>
+  <div class="slider-container">
+    
+    <!-- Slide 1 -->
+    <div class="slide active" id="slide-1">
+      <div class="slide-content">
+        <div class="visual-comparison">
+          <div class="card card-red">
+            <div class="card-icon">📸 Screenshot</div>
+            <div class="card-value">~1,275 tokens</div>
+          </div>
+          <div class="arrow">→</div>
+          <div class="card card-green">
+            <div class="card-icon">📄 Markdown</div>
+            <div class="card-value">~85 tokens</div>
+          </div>
+        </div>
+        <h1>Stop wasting tokens on screenshots</h1>
+        <p class="subtitle">TokenLite converts images and docs to markdown before they reach the AI.</p>
+        <button class="cta-btn next-btn">Get Started →</button>
+      </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="slide" id="slide-2">
+      <div class="slide-content">
+        <h2>Embarrassingly simple</h2>
+        <div class="steps-horizontal">
+          <div class="step">
+            <div class="step-icon">📸</div>
+            <div class="step-text">1. Take a screenshot</div>
+          </div>
+          <div class="step">
+            <div class="step-icon">⌨️</div>
+            <div class="step-text">2. Ctrl+V (as always)</div>
+          </div>
+          <div class="step">
+            <div class="step-icon">✅</div>
+            <div class="step-text">3. Markdown in chatbox</div>
+          </div>
+        </div>
+        <p class="docs-note">PDFs & DOCX? Drop them in the popup. Unlimited. Free.</p>
+        <button class="cta-btn next-btn">Next →</button>
+      </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="slide" id="slide-3">
+      <div class="slide-content">
+        <div class="large-icon">⚡</div>
+        <h1>5 free screenshot conversions included</h1>
+        <p class="subtitle">Docs and PDFs are always unlimited.</p>
+        <p class="muted-note">TokenLite Pro with unlimited screenshots — coming soon.</p>
+        <button class="cta-btn" id="finish-btn">Start Using TokenLite →</button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="progress-dots">
+    <div class="dot active"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+
+  <script src="onboarding.js"></script>
+</body>
+</html>

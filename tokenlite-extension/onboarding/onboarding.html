@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to TokenLite</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="onboarding.css">
+</head>
+<body>
+  <div class="ambient-glow" aria-hidden="true"></div>
+  <div class="slider-container">
+    <!-- Slide 1 -->
+    <div class="slide active" id="slide-1">
+      <div class="slide-content slide-panel">
+        <div class="eyebrow">Token efficiency</div>
+        <div class="visual-stack">
+          <div class="compare-card compare-card-high">
+            <div class="compare-label">Screenshot</div>
+            <div class="compare-value">1275 Tokens</div>
+          </div>
+          <div class="flow-arrow">↓</div>
+          <div class="compare-card compare-card-low">
+            <div class="compare-label">Markdown</div>
+            <div class="compare-value">85 Tokens</div>
+          </div>
+        </div>
+        <h1>Stop Wasting Tokens</h1>
+        <p class="subtitle">Convert heavy screenshots and documents into compact markdown before they reach the model.</p>
+        <div class="hero-stat">Save up to 93%</div>
+        <button class="cta-btn next-btn">Continue</button>
+      </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="slide" id="slide-2">
+      <div class="slide-content slide-panel">
+        <div class="eyebrow">Automatic workflow</div>
+        <div class="flow-visual">
+          <div class="flow-card">Screenshot</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-card flow-card-brand">TokenLite</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-card">Markdown</div>
+        </div>
+        <h2>Works Automatically</h2>
+        <p class="subtitle flow-copy">Take a screenshot.<br>Paste normally.<br>TokenLite does the rest.</p>
+        <button class="cta-btn next-btn">Continue</button>
+      </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="slide" id="slide-3">
+      <div class="slide-content slide-panel ready-panel">
+        <div class="large-icon">⚡</div>
+        <h1>You're Ready</h1>
+        <p class="subtitle">5 Free Screenshot Conversions Included</p>
+        <p class="secondary-note">PDF &amp; DOC Conversion Is Unlimited</p>
+        <button class="cta-btn" id="finish-btn">Open ChatGPT</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="progress-dots">
+    <div class="dot active"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+
+  <script src="onboarding.js"></script>
+</body>
+</html>

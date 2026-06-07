@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TokenLite</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header class="header">
+    <div class="logo">⚡ TokenLite</div>
+    <div class="badge" id="screenshot-badge">3/5 used</div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab-btn active" data-tab="docs">Docs</button>
+    <button class="tab-btn" data-tab="screenshots">Screenshots</button>
+  </nav>
+
+  <main>
+    <!-- DOCS TAB -->
+    <section id="docs-tab" class="tab-content active">
+      
+      <!-- State: Default (Dropzone) -->
+      <div id="state-default" class="state-panel active">
+        <div class="dropzone" id="dropzone">
+          <input type="file" id="file-input" accept=".pdf,.docx" hidden>
+          <div class="dropzone-icon">📄</div>
+          <div class="dropzone-title">Drop PDF or DOCX here</div>
+          <div class="dropzone-sub">Click to browse &middot; Unlimited &amp; free</div>
+        </div>
+      </div>
+
+      <!-- State: Converting -->
+      <div id="state-converting" class="state-panel">
+        <div class="converting-card">
+          <div class="converting-info">
+            <span class="file-name" id="converting-filename">document.pdf</span>
+            <span class="extracting-text">Extracting text...</span>
+          </div>
+          <div class="progress-bar-container">
+            <div class="progress-bar" id="converting-progress"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- State: Done -->
+      <div id="state-done" class="state-panel">
+        <div class="stats-row">
+          <div class="stat">
+            <span class="stat-label">Size</span>
+            <span class="stat-value"><span id="done-orig-size">2MB</span> &rarr; <span id="done-md-size">15KB</span></span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Tokens Saved</span>
+            <span class="stat-value text-green" id="done-tokens-saved">98%</span>
+          </div>
+        </div>
+        
+        <div class="preview-box" id="done-preview">
+          <!-- Markdown preview goes here -->
+        </div>
+
+        <div class="action-buttons">
+          <button class="btn btn-primary" id="btn-paste">⚡ Paste to Chat</button>
+          <button class="btn btn-secondary" id="btn-copy">Copy</button>
+        </div>
+      </div>
+
+      <!-- State: Error -->
+      <div id="state-error" class="state-panel">
+        <div class="error-card">
+          <div class="error-icon">⚠️</div>
+          <div class="error-message" id="error-message">Failed to extract text from document.</div>
+          <button class="btn btn-secondary" id="btn-retry">Retry</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREENSHOTS TAB -->
+    <section id="screenshots-tab" class="tab-content">
+      <div class="usage-section">
+        <div class="usage-header">
+          <span>Monthly screenshots</span>
+          <span id="usage-text">3/5</span>
+        </div>
+        <div class="progress-bar-container">
+          <div class="progress-bar" id="usage-progress" style="width: 60%"></div>
+        </div>
+      </div>
+
+      <!-- Upgrade card (hidden by default unless 5/5) -->
+      <div class="upgrade-card" id="upgrade-card" style="display: none;">
+        <div>You've reached your limit!</div>
+        <button class="btn btn-primary btn-sm">Upgrade to Pro</button>
+      </div>
+
+      <div class="instruction-card">
+        <div><span class="text-accent">Just press Ctrl+V</span> on any AI site</div>
+        <div class="text-muted text-sm">TokenLite intercepts automatically</div>
+      </div>
+
+      <div class="history-list">
+        <div class="history-header">Last Conversions</div>
+        <div class="history-items" id="history-items">
+          <!-- Example items -->
+          <div class="history-item">
+            <div class="history-item-left">
+              <div class="history-filename">screenshot_1.png</div>
+              <div class="history-time">2 mins ago</div>
+            </div>
+            <div class="history-tokens text-green">99% saved</div>
+          </div>
+          <div class="history-item">
+            <div class="history-item-left">
+              <div class="history-filename">image_x.png</div>
+              <div class="history-time">1 hr ago</div>
+            </div>
+            <div class="history-tokens text-green">95% saved</div>
+          </div>
+          <div class="history-item">
+            <div class="history-item-left">
+              <div class="history-filename">diagram.png</div>
+              <div class="history-time">Yesterday</div>
+            </div>
+            <div class="history-tokens text-green">92% saved</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="popup.js"></script>
+</body>
+</html>

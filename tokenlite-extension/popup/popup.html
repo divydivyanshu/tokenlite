@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TokenLite</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header class="header">
+    <div class="brand-block">
+      <div class="logo">
+        <span class="logo-mark" aria-hidden="true">⚡</span>
+        <span class="logo-wordmark">TokenLite</span>
+      </div>
+      <div class="tagline">Paste smarter. Use less tokens.</div>
+    </div>
+    <div class="badge" id="screenshot-badge">3/5 Free</div>
+  </header>
+
+  <nav class="tabs" aria-label="TokenLite sections">
+    <button class="tab-btn active" data-tab="docs">Docs</button>
+    <button class="tab-btn" data-tab="screenshots">Screenshots</button>
+  </nav>
+
+  <main>
+    <!-- DOCS TAB -->
+    <section id="docs-tab" class="tab-content active">
+      <!-- State: Default (Dropzone) -->
+      <div id="state-default" class="state-panel active">
+        <div class="dropzone" id="dropzone">
+          <input type="file" id="file-input" accept=".pdf,.docx" hidden>
+          <div class="dropzone-shell">
+            <div class="dropzone-icon">⚡</div>
+            <div class="dropzone-title">Drop PDF or DOCX</div>
+            <div class="dropzone-sub">Convert files into markdown instantly</div>
+            <div class="dropzone-helper">Unlimited &amp; Free</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- State: Converting -->
+      <div id="state-converting" class="state-panel">
+        <div class="converting-card">
+          <div class="converting-logo">⚡</div>
+          <div class="converting-copy">
+            <div class="extracting-text">Extracting text...</div>
+            <div class="converting-status">Converting document into markdown</div>
+          </div>
+          <div class="converting-meta">
+            <span class="file-name" id="converting-filename">document.pdf</span>
+          </div>
+          <div class="progress-bar-container progress-bar-lg">
+            <div class="progress-bar" id="converting-progress"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- State: Done -->
+      <div id="state-done" class="state-panel">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <span class="stat-label">Original Size</span>
+            <span class="stat-value" id="done-orig-size">2MB</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Markdown Size</span>
+            <span class="stat-value" id="done-md-size">15KB</span>
+          </div>
+          <div class="stat-card stat-card-accent">
+            <span class="stat-label">Estimated Tokens Saved</span>
+            <span class="stat-value text-green" id="done-tokens-saved">98%</span>
+          </div>
+        </div>
+
+        <div class="preview-panel">
+          <div class="preview-header">
+            <span>Markdown Preview</span>
+            <span class="preview-header-muted">Ready to paste</span>
+          </div>
+          <div class="preview-box" id="done-preview">
+            <!-- Markdown preview goes here -->
+          </div>
+        </div>
+
+        <div class="action-buttons">
+          <button class="btn btn-primary" id="btn-paste">⚡ Paste to Chat</button>
+          <button class="btn btn-secondary" id="btn-copy">Copy</button>
+        </div>
+      </div>
+
+      <!-- State: Error -->
+      <div id="state-error" class="state-panel">
+        <div class="error-card">
+          <div class="error-icon">⚡</div>
+          <div class="error-eyebrow">Conversion Issue</div>
+          <div class="error-message" id="error-message">Failed to extract text from document.</div>
+          <button class="btn btn-secondary" id="btn-retry">Retry</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREENSHOTS TAB -->
+    <section id="screenshots-tab" class="tab-content">
+      <div class="usage-section card-surface">
+        <div class="usage-header">
+          <div>
+            <div class="section-kicker">Screenshot Usage</div>
+            <div class="usage-heading">Free monthly conversions</div>
+          </div>
+          <div class="usage-pill" id="usage-text">3/5</div>
+        </div>
+        <div class="progress-bar-container usage-progress-track">
+          <div class="progress-bar" id="usage-progress" style="width: 60%"></div>
+        </div>
+      </div>
+
+      <!-- Upgrade card (hidden by default unless 5/5) -->
+      <div class="upgrade-card" id="upgrade-card" style="display: none;">
+        <div>
+          <div class="upgrade-title">Need More Screenshots?</div>
+          <div class="upgrade-subtitle">TokenLite Pro Coming Soon</div>
+        </div>
+        <button class="btn btn-primary btn-sm">Notify Me</button>
+      </div>
+
+      <div class="instruction-card card-surface">
+        <div class="section-kicker">How it Works</div>
+        <div class="workflow-steps">
+          <div class="workflow-step">
+            <span class="workflow-index">01</span>
+            <span class="workflow-text">Take Screenshot</span>
+          </div>
+          <div class="workflow-step">
+            <span class="workflow-index">02</span>
+            <span class="workflow-text">Press Ctrl+V</span>
+          </div>
+          <div class="workflow-step">
+            <span class="workflow-index">03</span>
+            <span class="workflow-text">TokenLite Converts</span>
+          </div>
+          <div class="workflow-step">
+            <span class="workflow-index">04</span>
+            <span class="workflow-text">Markdown Appears</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="history-list">
+        <div class="history-header-row">
+          <div>
+            <div class="section-kicker">Recent Activity</div>
+            <div class="history-subtitle">Latest conversion history</div>
+          </div>
+        </div>
+        <div class="history-items" id="history-items">
+          <!-- Example items -->
+          <div class="history-item">
+            <div class="history-item-left">
+              <div class="history-filename">screenshot_1.png</div>
+              <div class="history-time">2 mins ago</div>
+            </div>
+            <div class="history-tokens text-green">99% saved</div>
+          </div>
+          <div class="history-item">
+            <div class="history-item-left">
+              <div class="history-filename">image_x.png</div>
+              <div class="history-time">1 hr ago</div>
+            </div>
+            <div class="history-tokens text-green">95% saved</div>
+          </div>
+          <div class="history-item">
+            <div class="history-item-left">
+              <div class="history-filename">diagram.png</div>
+              <div class="history-time">Yesterday</div>
+            </div>
+            <div class="history-tokens text-green">92% saved</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../lib/pdf.min.js"></script>
+  <script src="../lib/mammoth.browser.min.js"></script>
+  <script src="../lib/turndown.min.js"></script>
+  <script type="module" src="popup.js"></script>
+</body>
+</html>
