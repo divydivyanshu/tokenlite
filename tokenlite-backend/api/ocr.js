@@ -59,7 +59,6 @@ module.exports = async function (req, res) {
     const visionModels = [
       'llama-3.2-90b-vision-preview',
       'llama-3.2-11b-vision-preview',
-      'llama-3.1-8b-instant', // Fallback text model
     ];
     
     let lastError = null;
@@ -99,12 +98,26 @@ module.exports = async function (req, res) {
           console.error(`Model ${model} failed:`, errText);
           lastError = errText;
           
-          // If model doesn't support images, try next one
-          if (errText.includes('model does not support image input')) {
+          // Check if model doesn't support images (multiple patterns)
+          const imageSupportErrorPatterns = [
+            'model does not support image input',
+            'does not support images',
+            'cannot read image',
+            'unsupported image',
+            'image not supported'
+          ];
+          
+          const isImageSupportError = imageSupportErrorPatterns.some(pattern => 
+            errText.toLowerCase().includes(pattern.toLowerCase())
+          );
+          
+          if (isImageSupportError) {
+            console.log(`Model ${model} doesn't support images, trying next...`);
             continue;
           }
           
           // Other errors break the loop
+          console.log(`Model ${model} failed with other error, stopping retry loop`);
           break;
         }
 
@@ -139,20 +152,37 @@ module.exports = async function (req, res) {
     // If we get here, all models failed
     console.error('All vision models failed. Last error:', lastError);
     
-    if (lastError && lastError.includes('model does not support image input')) {
-      return res.status(400).json({ 
-        error: 'OCR_FAILED', 
-        message: 'No vision model available. Please try another image or contact support.' 
-      });
+    // Check for various error types
+    if (lastError) {
+      const errorLower = lastError.toLowerCase();
+      
+      if (errorLower.includes('model does not support image input') || 
+          errorLower.includes('does not support images') ||
+          errorLower.includes('cannot read image') ||
+          errorLower.includes('unsupported image') ||
+          errorLower.includes('image not supported')) {
+        return res.status(400).json({ 
+          error: 'OCR_FAILED', 
+          message: 'Vision models not available. Please try another image.' 
+        });
+      }
+      
+      if (errorLower.includes('quota') || errorLower.includes('rate limit')) {
+        return res.status(429).json({ 
+          error: 'GEMINI_QUOTA_EXCEEDED', 
+          message: 'API quota exceeded. Please try again later.' 
+        });
+      }
+      
+      if (errorLower.includes('invalid api key') || errorLower.includes('authentication')) {
+        return res.status(500).json({ 
+          error: 'OCR_FAILED', 
+          message: 'Service configuration error. Please contact support.' 
+        });
+      }
     }
     
-    if (lastError && (lastError.includes('quota') || lastError.includes('rate limit'))) {
-      return res.status(429).json({ 
-        error: 'GEMINI_QUOTA_EXCEEDED', 
-        message: 'API quota exceeded. Please try again later.' 
-      });
-    }
-    
+    // Generic failure
     return res.status(502).json({ 
       error: 'OCR_FAILED', 
       message: 'Image processing failed. Please try again.' 
