@@ -187,7 +187,8 @@ document.addEventListener('paste', async (event) => {
     } else if (response.status === 'GEMINI_QUOTA_EXCEEDED') {
       showToast("⚠️ Gemini API quota exceeded. Check billing or wait and try again.", 5000);
     } else if (response.status === 'OCR_FAILED') {
-      showToast("❌ Conversion failed. Try again.", 3000);
+      const errorMessage = response.message || 'Conversion failed. Try again.';
+      showToast(`❌ ${errorMessage}`, 5000);
     } else {
       showToast("❌ Conversion failed. Try again.", 3000);
     }
