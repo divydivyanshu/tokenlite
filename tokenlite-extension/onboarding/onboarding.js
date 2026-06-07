@@ -4,7 +4,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const nextBtns = document.querySelectorAll('.next-btn');
   const finishBtn = document.getElementById('finish-btn');
   const progressFill = document.querySelector('.progress-fill');
+  const logoImg = document.getElementById('logo-img');
   let currentSlide = 0;
+
+  // Set logo image source properly for Chrome extension
+  if (logoImg) {
+    if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.getURL) {
+      logoImg.src = chrome.runtime.getURL('icons/icon128.png');
+    } else {
+      // Fallback for testing in browser
+      logoImg.src = '../icons/icon128.png';
+    }
+  }
 
   // Glitch effect utility
   function triggerGlitch(element, intensity = 2) {
