@@ -7,14 +7,50 @@ document.addEventListener('DOMContentLoaded', () => {
   const logoImg = document.getElementById('logo-img');
   let currentSlide = 0;
 
-  // Set logo image source properly for Chrome extension
+  // Set logo image source - use base64 SVG as primary, dynamic loading as fallback
   if (logoImg) {
-    if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.getURL) {
-      logoImg.src = chrome.runtime.getURL('icons/icon128.png');
-    } else {
-      // Fallback for testing in browser
-      logoImg.src = '../icons/icon128.png';
-    }
+    console.log('TokenLite: Setting logo image source...');
+    
+    // Base64 encoded lightning bolt SVG (always works, no file access needed)
+    const base64SVG = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTI0LjUgMTBMMTcgMjBMMjQuNSAzMEwyNi41IDI2LjVMMjIuNSAyMEwyNi41IDEzLjVMMjQuNSAxMFpNMTUuNSAxMEw4IDIwTDE1LjUgMzBMMTcuNSAyNi41TDEzLjUgMjBMMTcuNSAxMy41TDE1LjUgMTBaIiBmaWxsPSIjMDBG RjlEIi8+Cjwvc3ZnPgo=';
+    
+    // Try base64 first (always works)
+    logoImg.src = base64SVG;
+    console.log('TokenLite: Using base64 SVG logo');
+    
+    // Optional: Try to load the actual PNG icon dynamically
+    logoImg.onload = function() {
+      console.log('TokenLite: Base64 logo loaded successfully');
+      
+      // Now try to load the actual PNG icon
+      if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.getURL) {
+        const pngUrl = chrome.runtime.getURL('icons/icon128.png');
+        console.log('TokenLite: Attempting to load PNG icon:', pngUrl);
+        
+        const pngImg = new Image();
+        pngImg.onload = function() {
+          console.log('TokenLite: PNG icon loaded, switching to it');
+          logoImg.src = pngUrl;
+        };
+        pngImg.onerror = function() {
+          console.warn('TokenLite: PNG icon failed to load, keeping SVG');
+        };
+        pngImg.src = pngUrl;
+      }
+    };
+    
+    logoImg.onerror = function() {
+      console.error('TokenLite: Base64 logo failed! Showing fallback icon');
+      // Show fallback lightning emoji
+      logoImg.style.display = 'none';
+      const fallbackIcon = document.createElement('div');
+      fallbackIcon.className = 'logo-fallback';
+      fallbackIcon.innerHTML = '⚡';
+      fallbackIcon.style.cssText = 'width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #00ff9d;';
+      logoImg.parentNode.insertBefore(fallbackIcon, logoImg);
+    };
+  } else {
+    console.error('TokenLite: logo-img element not found!');
   }
 
   // Glitch effect utility

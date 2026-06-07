@@ -45,7 +45,7 @@
   "options_page": "options/options.html",
   "web_accessible_resources": [
     {
-      "resources": ["utils/inject.js"],
+      "resources": ["utils/inject.js", "icons/icon128.png", "icons/icon48.png", "icons/icon16.png"],
       "matches": ["https://claude.ai/*", "https://chatgpt.com/*", "https://gemini.google.com/*", "https://www.perplexity.ai/*"]
     }
   ]
