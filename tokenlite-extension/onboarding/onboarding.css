@@ -842,6 +842,27 @@ body {
 
 /* Responsive */
 @media (max-width: 768px) {
+  .onboarding-header {
+    padding: 16px 20px 12px;
+  }
+  
+  .logo-container {
+    gap: 12px;
+  }
+  
+  .logo-img {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .logo-wordmark {
+    font-size: 16px;
+  }
+  
+  .logo-tagline {
+    font-size: 10px;
+  }
+  
   .comparison {
     flex-direction: column;
     gap: 16px;
@@ -923,10 +944,27 @@ body {
 }
 
 @media (max-height: 650px) {
+  .onboarding-header {
+    padding: 12px 16px 10px;
+  }
+  
+  .logo-img {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .logo-wordmark {
+    font-size: 14px;
+  }
+  
+  .logo-tagline {
+    font-size: 9px;
+  }
+  
   .slider-container,
   .slide {
     padding: 12px 12px 45px;
-    min-height: calc(100vh - 80px);
+    min-height: calc(100vh - 140px); /* Account for smaller header */
   }
   
   .title {
